@@ -152,10 +152,11 @@ execute "magento-data-media-import" do
   not_if { File.directory?("#{node['vagrant_magento']['mage']['dir']}/media/catalog/category/apparel.jpg")}
 end
 
-# TODO: prepare mysql database (drop it and recreat it)
 
 # Reimport mysql if local.xml is missing
 execute "magento-data-sql-import" do
+
+
   Chef::Log::info("Importing Magento sample data ... ")
   command "mysql -u root -p#{node['mysql']['server_root_password']} #{node['vagrant_magento']['config']['db_name']} < #{magento_data_dir}/magento_sample_data_for_#{magento_data_version}.sql"
 

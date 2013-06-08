@@ -5,6 +5,7 @@ default['vagrant_magento']['phpinfo_enabled'] = false                      #add 
 default['vagrant_magento']['mage_check_enabled'] = false                   #add an alias for a /magento-check.php file
 
 default['vagrant_magento']['sample_data']['install'] = false               #install Magento sample data
+default['vagrant_magento']['sample_data']['version'] = '1.6.1.0'
 
 default['vagrant_magento']['reindex'] = false                              #reindex Magento once deployed
 default['vagrant_magento']['clearcache'] = false                           #clear Magento cache once deployed
@@ -48,6 +49,11 @@ default['vagrant_magento']['config']['admin_password'] = "o123123"         #requ
 default['vagrant_magento']['config']['admin_email'] = "test@example.com"   #required, admin user email
 default['vagrant_magento']['config']['admin_firstname'] = "Admin"          #required, admin user first name
 default['vagrant_magento']['config']['admin_lastname'] = "User"            #required, admin user last name
+
+default['vagrant_magento']['config']['source']['install'] = true
+default['vagrant_magento']['config']['source']['url'] = "http://magentoversions.appspot.com"
+default['vagrant_magento']['config']['source']['version'] = "1.7.0.2"
+
 
 
 #override attributes for our included recipes
