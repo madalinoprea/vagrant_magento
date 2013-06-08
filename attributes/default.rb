@@ -1,5 +1,5 @@
 #default attributes.
-default['vagrant_magento']['mage']['dir'] = "/vagrant/"                    #magento dir
+default['vagrant_magento']['mage']['dir'] = "/vagrant/magento"                    #magento dir
 
 default['vagrant_magento']['phpinfo_enabled'] = false                      #add an alias for a /phpinfo.php file
 default['vagrant_magento']['mage_check_enabled'] = false                   #add an alias for a /magento-check.php file
@@ -27,7 +27,7 @@ default['vagrant_magento']['config']['db_prefix'] = ""                     #opti
                                                                            
 default['vagrant_magento']['config']['session_save'] = "files"             #optional, where to store session data - in db or files. files by default
 default['vagrant_magento']['config']['admin_frontname'] = ""               #optional, admin panel path, "admin" by default
-default['vagrant_magento']['config']['url'] = "{{base_url}}"               #required, URL the store is supposed to be available at
+default['vagrant_magento']['config']['url'] = "magento.local"               #required, URL the store is supposed to be available at
 default['vagrant_magento']['config']['skip_url_validation'] = "yes"        #optional, skip validating base url during installation or not. No by default
 default['vagrant_magento']['config']['use_rewrites'] = "yes"               #optional, Use Web Server (Apache) Rewrites,
                                                                            #You could enable this option to use web server rewrites functionality for improved SEO
@@ -43,8 +43,8 @@ default['vagrant_magento']['config']['enable_charts'] = ""                 #opti
 
 default['vagrant_magento']['config']['encryption_key'] = ""                #optional, will be automatically generated and displayed on success, if not specified
 
-default['vagrant_magento']['config']['admin_username'] = "mage-admin"      #required, admin user login
-default['vagrant_magento']['config']['admin_password'] = "abc1234"         #required, admin user password
+default['vagrant_magento']['config']['admin_username'] = "admin"      #required, admin user login
+default['vagrant_magento']['config']['admin_password'] = "o123123"         #required, admin user password
 default['vagrant_magento']['config']['admin_email'] = "test@example.com"   #required, admin user email
 default['vagrant_magento']['config']['admin_firstname'] = "Admin"          #required, admin user first name
 default['vagrant_magento']['config']['admin_lastname'] = "User"            #required, admin user last name
