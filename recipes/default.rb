@@ -213,3 +213,51 @@ execute "magento-install" do
 end
 
 
+# Modman & modman based extensions
+modman_base_dir = "#{node['vagrant_magento']['mage']['dir']}/.modman"
+Chef::Log::info("Modman dir #{modman_base_dir}")
+
+remote_file "/usr/bin/modman" do
+  source node['vagrant_magento']['modman']['url']
+  mode "0655"
+  action :create_if_missing
+
+  only_if { install_modman? }
+end
+
+execute "magento-modman-init" do
+  cwd node['vagrant_magento']['mage']['dir']
+  command "modman init"
+
+  Chef::Log::info("Creeaaaaating dir #{modman_base_dir}")
+
+  subscribes :run, 'execute[remote_file /usr/bin/modman]', :immediately
+  not_if { File.directory?(modman_base_dir) }
+end
+
+execute "magento-debug-install" do
+  cwd node['vagrant_magento']['mage']['dir']
+  command "modman clone magneto-debug #{node['vagrant_magento']['debug']['repository']}"
+
+  subscribes :run, 'execute[magento-modman-init]'
+  notifies :run, 'execute[magento-enable-template-symlink]', :delayed
+  only_if { node['vagrant_magento']['debug']['enabled'] }
+  not_if { File.directory?("#{modman_base_dir}/magneto-debug")}
+end
+
+execute "magento-enable-template-symlink" do
+  action :nothing
+
+  # Set dev/template/allow_symlink to 1 to allow symlinks (works only for Magento 1.6+)
+  template_symlink_query = "INSERT IGNORE INTO core_config_data (path, value) VALUES ('dev/template/allow_symlink', '1');"
+  command "mysql -u root -p#{node['mysql']['server_root_password']} #{node['vagrant_magento']['config']['db_name']} -e \"#{template_symlink_query}\""
+
+  notifies :run, 'execute[magento-clear-cache]', :delayed
+end
+
+execute "magento-clear-cache" do
+  action :nothing
+
+  # TODO: add smarter cache flushing based on magento backend cache
+  command "rm -rf #{node['vagrant_magento']['mage']['dir']}/var/cache"
+end

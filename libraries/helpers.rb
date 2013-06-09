@@ -1,4 +1,12 @@
+require 'fileutils'
+
 module MageHelper
+
+  def install_modman?
+    (node['vagrant_magento']['debug']['enabled'])
+  end
+
+
   def get_mage_ver(dir=node['vagrant_magento']['mage']['dir'])
     result = mage_ver(dir)
     Chef::Log.fatal("Magento version could not be detected") unless !result.empty?

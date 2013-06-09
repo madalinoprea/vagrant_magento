@@ -58,6 +58,10 @@ default['vagrant_magento']['config']['admin_email'] = "test@example.com"   #requ
 default['vagrant_magento']['config']['admin_firstname'] = "Admin"          #required, admin user first name
 default['vagrant_magento']['config']['admin_lastname'] = "User"            #required, admin user last name
 
+default['vagrant_magento']['modman']['url'] = "https://raw.github.com/colinmollenhour/modman/master/modman"
+default['vagrant_magento']['debug']['enabled'] = true
+default['vagrant_magento']['debug']['repository'] = "https://github.com/madalinoprea/magneto-debug.git"
+
 #override attributes for our included recipes
 override['build_essential']['compiletime'] = true
 override['mysql']['server_root_password'] = node['vagrant_magento']['config']['db_pass']
