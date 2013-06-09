@@ -146,7 +146,7 @@ execute "magento-data-extract" do
   command "tar xjf #{magento_data_filepath}"
 
 
-  subscribes :run, 'execute[remote file "#{magento_data_filepath}"]', :immediately
+  subscribes :run, 'execute[remote_file "#{magento_data_filepath}"]', :immediately
   not_if { node['vagrant_magento']['sample_data']['install'] == false }
   only_if { File.file?(magento_data_filepath) }
 end
