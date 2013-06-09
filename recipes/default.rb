@@ -19,7 +19,7 @@ class Chef::Resource
 end
 
 #install apt packages
-%w{unzip libsqlite3-dev php5-mcrypt}.each do |pkg|
+%w{unzip libsqlite3-dev php5-mcrypt php-apc php5-xdebug}.each do |pkg|
   package pkg do
     action :upgrade
   end
@@ -44,6 +44,13 @@ web_app "magento_dev" do
   docroot node['vagrant_magento']['mage']['dir']
   
   notifies :restart, "service[apache2]", :immediately
+end
+
+template "/etc/php5/conf.d/xdebug.ini" do
+  source "xdebug.ini.erb"
+  owner "root"
+  group "root"
+  mode 0644
 end
 
 #create a phpinfo file for use in our Apache vhost
