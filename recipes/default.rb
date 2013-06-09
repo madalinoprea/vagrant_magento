@@ -115,8 +115,7 @@ end
 execute "magento-extract" do
   Chef::Log::info("Extracting Magento #{magento_src_filepath} to #{node['vagrant_magento']['mage']['dir']} ... ")
 
-  # TODO: add document root as attribute
-  command "tar xvf #{magento_src_filepath} -C /vagrant"
+  command "tar xvf #{magento_src_filepath} -C #{node['vagrant_magento']['mage']['install_dir']}"
 
   not_if { node['vagrant_magento']['source']['install'] == false }
   not_if { File.file?("#{node['vagrant_magento']['mage']['dir']}/index.php")}
