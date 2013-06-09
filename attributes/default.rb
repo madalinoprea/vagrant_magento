@@ -1,4 +1,4 @@
-#default attributes.
+# Default attributes.
 default['vagrant_magento']['mage']['install_dir'] = "/vagrant"            # Where to install magento
 default['vagrant_magento']['mage']['dir'] = "#{default['vagrant_magento']['mage']['install_dir']}/magento"             # magento base dir
 
@@ -8,7 +8,7 @@ default['vagrant_magento']['mage_dev_enabled'] = false                     # Ena
 
 default['vagrant_magento']['source']['install'] = true
 default['vagrant_magento']['source']['url'] = "http://magentoversions.appspot.com"  # Default Magento versions repo used
-default['vagrant_magento']['source']['version'] = "1.7.0.2"
+default['vagrant_magento']['source']['version'] = "magento-1.7.0.2"
 
 default['vagrant_magento']['sample_data']['install'] = false               #install Magento sample data
 default['vagrant_magento']['sample_data']['url'] = "http://www.magentocommerce.com/downloads/assets"  # Default url used to download sample data
@@ -53,13 +53,14 @@ default['vagrant_magento']['config']['enable_charts'] = ""                 #opti
 default['vagrant_magento']['config']['encryption_key'] = ""                #optional, will be automatically generated and displayed on success, if not specified
 
 default['vagrant_magento']['config']['admin_username'] = "admin"      #required, admin user login
-default['vagrant_magento']['config']['admin_password'] = "o123123"         #required, admin user password
+default['vagrant_magento']['config']['admin_password'] = "m123123"         #required, admin user password
 default['vagrant_magento']['config']['admin_email'] = "test@example.com"   #required, admin user email
 default['vagrant_magento']['config']['admin_firstname'] = "Admin"          #required, admin user first name
 default['vagrant_magento']['config']['admin_lastname'] = "User"            #required, admin user last name
 
+# Magento extensions
 default['vagrant_magento']['modman']['url'] = "https://raw.github.com/colinmollenhour/modman/master/modman"
-default['vagrant_magento']['debug']['enabled'] = true
+default['vagrant_magento']['debug']['enabled'] = false
 default['vagrant_magento']['debug']['repository'] = "https://github.com/madalinoprea/magneto-debug.git"
 
 #override attributes for our included recipes

@@ -10,10 +10,6 @@ include_recipe "php::module_curl"
 include_recipe "apache2"
 include_recipe "apache2::mod_php5"
 
-chef_gem "versionomy"
-require "versionomy"
-
-
 class Chef::Resource
   include MageHelper
 end
@@ -227,8 +223,6 @@ end
 execute "magento-modman-init" do
   cwd node['vagrant_magento']['mage']['dir']
   command "modman init"
-
-  Chef::Log::info("Creeaaaaating dir #{modman_base_dir}")
 
   subscribes :run, 'execute[remote_file /usr/bin/modman]', :immediately
   not_if { File.directory?(modman_base_dir) }
