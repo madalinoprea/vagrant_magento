@@ -86,12 +86,14 @@ mysql_database node['vagrant_magento']['config']['db_name'] do
 end
 
 # Download Magento source code
-magento_src_filename = "#{node['vagrant_magento']['source']['version']}.tar.bz2"
+src_type = node['vagrant_magento']['source']['type']
+magento_src_filename = "#{node['vagrant_magento']['source']['version']}.#{src_type}"
 magento_src_filepath = "#{Chef::Config['file_cache_path']}/#{magento_src_filename}"
 magento_src_url = "#{node['vagrant_magento']['source']['url']}/#{magento_src_filename}"
 
+data_type = node['vagrant_magento']['sample_data']['type']
 magento_data_version = node['vagrant_magento']['sample_data']['version']
-magento_data_filename = "magento-sample-data-#{magento_data_version}.tar.bz2"
+magento_data_filename = "magento-sample-data-#{magento_data_version}.#{data_type}"
 magento_data_filepath = "#{Chef::Config['file_cache_path']}/#{magento_data_filename}"
 magento_data_dir = "#{Chef::Config['file_cache_path']}/magento-sample-data-#{magento_data_version}"
 magento_data_url = "#{node['vagrant_magento']['sample_data']['url']}/#{magento_data_version}/#{magento_data_filename}"
@@ -111,7 +113,7 @@ end
 execute "magento-extract" do
   Chef::Log::info("Extracting Magento #{magento_src_filepath} to #{node['vagrant_magento']['mage']['dir']} ... ")
 
-  command "tar xvf #{magento_src_filepath} -C #{node['vagrant_magento']['mage']['install_dir']}"
+  command "tar xjf #{magento_src_filepath} -C #{node['vagrant_magento']['mage']['install_dir']}"
 
   not_if { node['vagrant_magento']['source']['install'] == false }
   not_if { File.file?("#{node['vagrant_magento']['mage']['dir']}/index.php")}
@@ -202,6 +204,7 @@ execute "magento-install" do
   command "php -f install.php -- #{args.join(' ')}"
 
   subscribes :run, 'execute[magento-data-sql-import]', :immediately
+  notifies :run, 'execute[magento-clear-cache]', :delayed
 
   not_if { File.exists?("#{node['vagrant_magento']['mage']['dir']}/app/etc/local.xml") }
   not_if { node['vagrant_magento']['config']['install'] == false }

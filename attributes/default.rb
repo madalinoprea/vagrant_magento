@@ -8,10 +8,12 @@ default['vagrant_magento']['mage_dev_enabled'] = false                     # Ena
 
 default['vagrant_magento']['source']['install'] = true
 default['vagrant_magento']['source']['url'] = "http://magentoversions.appspot.com"  # Default Magento versions repo used
+default['vagrant_magento']['source']['type'] = "tar.bz2"                   # Extension used by Magento versions. Possible values are tar.bz2, tar.gz
 default['vagrant_magento']['source']['version'] = "magento-1.7.0.2"
 
 default['vagrant_magento']['sample_data']['install'] = false               #install Magento sample data
 default['vagrant_magento']['sample_data']['url'] = "http://www.magentocommerce.com/downloads/assets"  # Default url used to download sample data
+default['vagrant_magento']['sample_data']['type'] = "tar.bz2"                   # Extension used by Magento versions. Possible values are tar.bz2, tar.gz, tgz
 default['vagrant_magento']['sample_data']['version'] = '1.6.1.0'           # Default Magento sample data version
 
 # TODO: Add support for reindex, clear cache
