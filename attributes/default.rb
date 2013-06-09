@@ -1,12 +1,20 @@
 #default attributes.
-default['vagrant_magento']['mage']['dir'] = "/vagrant/magento"                    #magento dir
+default['vagrant_magento']['mage']['install_dir'] = "/vagrant"            # Where to install magento
+default['vagrant_magento']['mage']['dir'] = "#{default['vagrant_magento']['mage']['install_dir']}/magento"             # magento base dir
 
 default['vagrant_magento']['phpinfo_enabled'] = false                      #add an alias for a /phpinfo.php file
 default['vagrant_magento']['mage_check_enabled'] = false                   #add an alias for a /magento-check.php file
+default['vagrant_magento']['mage_dev_enabled'] = false                     # Enables Magento Developer mode (errors on)
+
+default['vagrant_magento']['source']['install'] = true
+default['vagrant_magento']['source']['url'] = "http://magentoversions.appspot.com"  # Default Magento versions repo used
+default['vagrant_magento']['source']['version'] = "1.7.0.2"
 
 default['vagrant_magento']['sample_data']['install'] = false               #install Magento sample data
-default['vagrant_magento']['sample_data']['version'] = '1.6.1.0'
+default['vagrant_magento']['sample_data']['url'] = "http://www.magentocommerce.com/downloads/assets"  # Default url used to download sample data
+default['vagrant_magento']['sample_data']['version'] = '1.6.1.0'           # Default Magento sample data version
 
+# TODO: Add support for reindex, clear cache
 default['vagrant_magento']['reindex'] = false                              #reindex Magento once deployed
 default['vagrant_magento']['clearcache'] = false                           #clear Magento cache once deployed
 
@@ -49,12 +57,6 @@ default['vagrant_magento']['config']['admin_password'] = "o123123"         #requ
 default['vagrant_magento']['config']['admin_email'] = "test@example.com"   #required, admin user email
 default['vagrant_magento']['config']['admin_firstname'] = "Admin"          #required, admin user first name
 default['vagrant_magento']['config']['admin_lastname'] = "User"            #required, admin user last name
-
-default['vagrant_magento']['config']['source']['install'] = true
-default['vagrant_magento']['config']['source']['url'] = "http://magentoversions.appspot.com"
-default['vagrant_magento']['config']['source']['version'] = "1.7.0.2"
-
-
 
 #override attributes for our included recipes
 override['build_essential']['compiletime'] = true

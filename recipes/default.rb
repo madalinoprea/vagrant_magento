@@ -91,7 +91,7 @@ magento_data_version = node['vagrant_magento']['sample_data']['version']
 magento_data_filename = "magento-sample-data-#{magento_data_version}.tar.bz2"
 magento_data_filepath = "#{Chef::Config['file_cache_path']}/#{magento_data_filename}"
 magento_data_dir = "#{Chef::Config['file_cache_path']}/magento-sample-data-#{magento_data_version}"
-magento_data_url = "http://www.magentocommerce.com/downloads/assets/#{magento_data_version}/#{magento_data_filename}"
+magento_data_url = "#{node['vagrant_magento']['sample_data']['url']}/#{magento_data_version}/#{magento_data_filename}"
 
 remote_file "#{magento_src_filepath}" do
   Chef::Log::info("Downloading #{magento_src_url} to #{magento_src_filepath} ... ")
@@ -152,11 +152,8 @@ execute "magento-data-media-import" do
   not_if { File.directory?("#{node['vagrant_magento']['mage']['dir']}/media/catalog/category/apparel.jpg")}
 end
 
-
-# Reimport mysql if local.xml is missing
+# Reimport mysql if local.xml is missing and if sample_data install was requested
 execute "magento-data-sql-import" do
-
-
   Chef::Log::info("Importing Magento sample data ... ")
   command "mysql -u root -p#{node['mysql']['server_root_password']} #{node['vagrant_magento']['config']['db_name']} < #{magento_data_dir}/magento_sample_data_for_#{magento_data_version}.sql"
 
