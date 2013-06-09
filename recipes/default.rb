@@ -155,6 +155,7 @@ execute "magento-data-media-import" do
   command "cp -r #{magento_data_dir}/media #{node['vagrant_magento']['mage']['dir']}"
 
   subscribes :run, 'execute[magento-data-extract]', :immediately
+  not_if { node['vagrant_magento']['sample_data']['install'] == false }
   not_if { File.directory?("#{node['vagrant_magento']['mage']['dir']}/media/catalog/category/apparel.jpg")}
 end
 
@@ -164,6 +165,7 @@ execute "magento-data-sql-import" do
   command "mysql -u root -p#{node['mysql']['server_root_password']} #{node['vagrant_magento']['config']['db_name']} < #{magento_data_dir}/magento_sample_data_for_#{magento_data_version}.sql"
 
   not_if { File.file?("#{node['vagrant_magento']['mage']['dir']}/app/etc/local.xml") }
+  not_if { node['vagrant_magento']['sample_data']['install'] == false }
   subscribes :run, 'execute[magento-data-extract]', :immediately
 end
 
