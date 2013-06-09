@@ -100,7 +100,7 @@ magento_data_filepath = "#{Chef::Config['file_cache_path']}/#{magento_data_filen
 magento_data_dir = "#{Chef::Config['file_cache_path']}/magento-sample-data-#{magento_data_version}"
 magento_data_url = "#{node['vagrant_magento']['sample_data']['url']}/#{magento_data_version}/#{magento_data_filename}"
 
-remote_file "#{magento_src_filepath}" do
+remote_file magento_src_filepath do
   Chef::Log::info("Downloading #{magento_src_url} to #{magento_src_filepath} ... ")
 
   source magento_src_url
@@ -121,12 +121,12 @@ execute "magento-extract" do
   not_if { File.file?("#{node['vagrant_magento']['mage']['dir']}/index.php")}
   only_if { File.file?("#{magento_src_filepath}") }
 
-  subscribes :run, 'execute[remote_file "#{magento_src_filepath}]', :immediately
+  subscribes :run, 'execute[remote_file #{magento_src_filepath}]', :immediately
 end
 
 
 # Magento Sample Data
-remote_file "#{magento_data_filepath}" do
+remote_file magento_data_filepath do
   Chef::Log::info("Downloading Magento sample data from #{magento_data_url} to #{magento_data_filepath} ... ")
 
   source magento_data_url
@@ -134,7 +134,7 @@ remote_file "#{magento_data_filepath}" do
   backup false
   mode "0644"
 
-  subscribes :run, 'execute[magento-extract]', :immediately
+  subscribes :create_if_missing, 'execute[magento-extract]', :immediately
   not_if { node['vagrant_magento']['sample_data']['install'] == false }
 end
 
@@ -144,8 +144,7 @@ execute "magento-data-extract" do
   cwd Chef::Config[:file_cache_path]
   command "tar xjf #{magento_data_filepath}"
 
-
-  subscribes :run, 'execute[remote_file "#{magento_data_filepath}"]', :immediately
+  subscribes :run, 'execute[remote_file #{magento_data_filepath}]', :immediately
   not_if { node['vagrant_magento']['sample_data']['install'] == false }
   only_if { File.file?(magento_data_filepath) }
 end
