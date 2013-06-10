@@ -257,3 +257,11 @@ execute "magento-clear-cache" do
   # TODO: add smarter cache flushing based on magento backend cache
   command "rm -rf #{node['vagrant_magento']['mage']['dir']}/var/cache"
 end
+
+  remote_file "/usr/local/bin/n98-magerun.phar" do
+  source node['vagrant_magento']['n98-magerun']['repository']
+  mode "0655"
+  action :create_if_missing
+
+  not_if { node['vagrant_magento']['n98-magerun']['enabled'] == false }
+end

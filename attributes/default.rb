@@ -65,6 +65,11 @@ default['vagrant_magento']['modman']['url'] = "https://raw.github.com/colinmolle
 default['vagrant_magento']['debug']['enabled'] = false
 default['vagrant_magento']['debug']['repository'] = "https://github.com/madalinoprea/magneto-debug.git"
 
+# Awesome tool for Magento
+default['vagrant_magento']['n98-magerun']['enabled'] = true
+default['vagrant_magento']['n98-magerun']['repository'] = "https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar"
+
+
 #override attributes for our included recipes
 override['build_essential']['compiletime'] = true
 override['mysql']['server_root_password'] = node['vagrant_magento']['config']['db_pass']
