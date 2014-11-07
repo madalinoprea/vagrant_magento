@@ -38,7 +38,7 @@ default['vagrant_magento']['config']['db_prefix'] = ""                     #opti
                                                                            
 default['vagrant_magento']['config']['session_save'] = "files"             #optional, where to store session data - in db or files. files by default
 default['vagrant_magento']['config']['admin_frontname'] = ""               #optional, admin panel path, "admin" by default
-default['vagrant_magento']['config']['url'] = "magento.local"               #required, URL the store is supposed to be available at
+default['vagrant_magento']['config']['url'] = "magento.dev"               #required, URL the store is supposed to be available at
 default['vagrant_magento']['config']['skip_url_validation'] = "yes"        #optional, skip validating base url during installation or not. No by default
 default['vagrant_magento']['config']['use_rewrites'] = "yes"               #optional, Use Web Server (Apache) Rewrites,
                                                                            #You could enable this option to use web server rewrites functionality for improved SEO
